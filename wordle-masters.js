@@ -5,6 +5,14 @@ const ANSWER_LENGTH = 5;
 async function init() {
   let currentGuess = '';
   let currentRow = 0;  
+
+  // fetching the word of the day
+  const res = await fetch('https://words.dev-apis.com/word-of-the-day');
+  const resObj = await res.json();
+  const word = resObj.word.toUpperCase();
+  setLoading(false);
+  
+  console.log(word);
   function addLetter (letter) {
     if (currentGuess.length < ANSWER_LENGTH) {
       // add letter to the end
@@ -58,5 +66,7 @@ function isLetter(letter) {
   return /^[a-zA-Z]$/.test(letter);
 }
 
-
+function setLoading(isLoading) {
+  loadingDiv.classList.toggle('show', isLoading);
+}
 init();
